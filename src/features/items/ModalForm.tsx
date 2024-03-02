@@ -6,17 +6,20 @@ import { useAppDispatch } from "../../helpers/hooks";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "30%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
+  transform: "translate(-20%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: "rgb(249, 247, 247)",
   border: "2px solid #000",
   boxShadow: 24,
   pt: 2,
   px: 4,
   pb: 3,
 };
+
+const labelStyle = "text-blue-dark text-l font-semibold";
+const inputStyle = "border border-blue-light rounded-md w-[100%] pl-1";
 
 type PropFormType = {
   item: ItemType;
@@ -53,7 +56,6 @@ function FormInModal({ item, handleClose }: PropFormType) {
   });
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log("Submiiiiit  ", data);
     const newItem: ItemType = {
       ...data,
       id: item.id,
@@ -66,28 +68,43 @@ function FormInModal({ item, handleClose }: PropFormType) {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-2 mt-2">
       <div>
-        <p>Title</p>
-        <input value={titleField.value} required {...register("title")} />
+        <p className={labelStyle}> Title</p>
+        <input
+          placeholder="New Title..."
+          className={inputStyle}
+          value={titleField.value}
+          required
+          {...register("title")}
+        />
       </div>
       <div>
-        <p>Description</p>
+        <p className={labelStyle}>Description : (optional)</p>
         <input
+          placeholder="Enter the description of your item..."
+          className={inputStyle}
           value={descriptionField.value ? descriptionField.value : ""}
           {...register("description")}
         />
       </div>
       <div>
-        <p>Quantity</p>
+        <p className={labelStyle}>Quantity</p>
         <input
+          placeholder="1"
+          className={inputStyle}
           value={quantityField.value}
           type="number"
           required
           {...register("quantity")}
         />
       </div>
-      <button type="submit">Update</button>
+      <button
+        type="submit"
+        className="border rounded-full px-2 m-2 text-white-bg bg-blue-mid font-semibold"
+      >
+        Update
+      </button>
     </form>
   );
 }
@@ -113,7 +130,6 @@ export default function ModalForm({ item, open, setOpen }: PropType) {
       >
         <Box sx={{ ...style, width: 400 }}>
           <FormInModal item={item} handleClose={handleClose} />
-          {/* <ChildModal /> */}
         </Box>
       </Modal>
     </div>

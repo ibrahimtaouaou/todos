@@ -4,11 +4,11 @@ import { ItemType } from "./itemSlice";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "30%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  bgcolor: "background.paper",
+  bgcolor: "rgb(249, 247, 247)",
   border: "2px solid #000",
   boxShadow: 24,
   pt: 2,
@@ -35,15 +35,27 @@ export default function ModalInfo({ item, open, setOpen }: PropType) {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">{item.title}</h2>
-          <p>ID : {item.id}</p>
-          <p>Quantity : {item.quantity}</p>
-          <p>Tab : {item.tab}</p>
-          <p>Checked ? : {item.checked ? "YES" : "NO"}</p>
-          <p id="parent-modal-description">
-            {item.description ?? "No description"}
-          </p>
+        <Box sx={{ ...style, width: 400, maxHeight: 250 }}>
+          {item.checked ? (
+            <span className="flex justify-end text-xs">✅</span>
+          ) : (
+            ""
+          )}
+          <h2 className="text-center font-semibold text-xl text-blue-dark">
+            {item.title} (x{item.quantity})
+          </h2>
+          {item.description ? (
+            <>
+              <p className="text-l mt-2 text-blue-dark px-2">Description :</p>
+              <p className="bg-blue-light w-full px-2 rounded-xl text-sm italic max-h-[150px] overflow-y-auto">
+                {item.description}
+              </p>
+            </>
+          ) : (
+            <p className="bg-blue-light w-full px-2 rounded-xl text-sm italic text-center mt-4 ">
+              No description available
+            </p>
+          )}
         </Box>
       </Modal>
     </div>

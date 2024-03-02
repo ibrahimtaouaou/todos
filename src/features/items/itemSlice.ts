@@ -28,18 +28,9 @@ const initialState: ItemsState = {
   items: [
     {
       id: 0,
-      tab: "Demo".toUpperCase(),
-      title: "Milk",
+      tab: "Example".toUpperCase(),
+      title: "Example",
       quantity: 4,
-      checked: true,
-      description: "",
-      createdAt: Date.now(),
-    },
-    {
-      id: 1,
-      tab: "Demo".toUpperCase(),
-      title: "Water",
-      quantity: 433,
       checked: false,
       description: "",
       createdAt: Date.now(),

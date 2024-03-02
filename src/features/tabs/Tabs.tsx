@@ -64,7 +64,6 @@ export default function VerticalTabs() {
     <Box
       sx={{
         flexGrow: 1,
-        bgcolor: "background.paper",
         display: "flex",
         height: "auto",
       }}
@@ -85,16 +84,14 @@ export default function VerticalTabs() {
       {tabs.map((tab, i) => {
         return (
           <TabPanel key={i} value={value} index={i}>
-            <div className="">
-              <button
-                onClick={handleOpenNewItemModal}
-                className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-              >
-                <span className="">ADD </span> <AddIcon />
-              </button>
-              <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} />
-              <Items tab={tab.name} />
-            </div>
+            <button
+              onClick={handleOpenNewItemModal}
+              className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white-bg bg-blue-mid font-semibold"
+            >
+              <span className="">ADD </span> <AddIcon />
+            </button>
+            <NewItemModal open={newItemOpen} setOpen={setNewItemOpen} />
+            <Items tab={tab.name} />
           </TabPanel>
         );
       })}

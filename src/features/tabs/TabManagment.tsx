@@ -14,6 +14,9 @@ import {
   removeAllItem,
   updateTabItem,
 } from "../items/itemSlice";
+import AddIcon from "@mui/icons-material/Add";
+
+const styles = `border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white-bg bg-blue-mid font-semibold`;
 
 function TabManagment() {
   const dispatch = useAppDispatch();
@@ -39,18 +42,20 @@ function TabManagment() {
       if (!isInTab(newName.toUpperCase())) {
         dispatch(addNewTab(newName));
       } else alert("Tab names must be different");
-    } else alert("Pleaser enter a valid tab name");
+    } else alert("Please enter a valid tab name");
   }
 
   function handleAddRestrictedTab() {
     const newName = prompt("New Tab Name : ");
     if (newName) {
       if (!isInTab(newName.toUpperCase())) {
-        const code = prompt("Enter your code");
+        const code = prompt(
+          "Enter a code for this tab. This code will be needed whenever you open this restricted tab !"
+        );
         if (code) dispatch(addNewRestrictedTab({ newName, code }));
         else alert("Enter a valid password");
       } else alert("Tab names must be different");
-    } else alert("Pleaser enter a valid tab name");
+    } else alert("Please enter a valid tab name");
   }
 
   function handleChangeTabName() {
@@ -62,7 +67,7 @@ function TabManagment() {
           updateTabItem({ currentTab: currentTab, newTabName: newName })
         );
       } else alert("Tab names must be different");
-    } else alert("Pleaser enter a valid tab name");
+    } else alert("Please enter a valid tab name");
   }
 
   function handleDeleteAllItems() {
@@ -91,39 +96,24 @@ function TabManagment() {
   }
 
   return (
-    <div className="flex flex-wrap bg-slate-100 m-2 justify-center">
-      <button
-        onClick={handleAddTab}
-        className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-      >
-        Add New Tab
+    <div className="flex flex-wrap bg-white-bg p-2 justify-center">
+      <button onClick={handleAddTab} className={styles}>
+        <AddIcon fontSize="small" /> <span>Tab</span>
       </button>
-      <button
-        onClick={handleAddRestrictedTab}
-        className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-      >
-        Add New Restricted Tab
+      <button onClick={handleAddRestrictedTab} className={styles}>
+        <AddIcon fontSize="small" /> <span>Restricted Tab</span>
       </button>
-      <button
-        onClick={handleChangeTabName}
-        className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-      >
-        Rename Current Tab
+      <button onClick={handleChangeTabName} className={styles}>
+        <span>Rename Current Tab</span>
       </button>
       {!isTabEmpty && (
-        <button
-          onClick={handleDeleteAllItems}
-          className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-        >
-          Delete All Items In Tab
+        <button onClick={handleDeleteAllItems} className={styles}>
+          <span>Delete All Items In Tab</span>
         </button>
       )}
       {!isLastTab && (
-        <button
-          onClick={handleDeleteTab}
-          className="border flex flex-row items-center rounded-full w-auto px-2 m-2 text-white bg-green-600 font-semibold"
-        >
-          Delete Current Tab
+        <button onClick={handleDeleteTab} className={styles}>
+          <span>Delete Current Tab</span>
         </button>
       )}
     </div>

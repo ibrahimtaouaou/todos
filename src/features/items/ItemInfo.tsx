@@ -39,7 +39,7 @@ function ItemInfo({ item }: PropType) {
     <div className="border border-solid grid grid-cols-6">
       <div
         className={`col-span-4 grid grid-cols-4 items-center ${
-          item.checked ? "line-through bg-slate-300" : ""
+          item.checked ? "line-through bg-blue-mid text-white-bg" : ""
         }`}
       >
         <input

@@ -3,9 +3,9 @@ import VerticalTabs from "./features/tabs/Tabs";
 
 function App() {
   return (
-    <div className="flex flex-col m-4">
-      <h1 className="text-xl text-red-400 self-center mt-4">
-        Todos : Free Your Brain
+    <div className="flex flex-col bg-white-bg h-[100vh] divide-y-2">
+      <h1 className="text-xl text-white-bg bg-blue-dark font-semibold w-full self-center py-4 text-center">
+        Free Your Brain
       </h1>
       <TabManagment />
       <VerticalTabs />

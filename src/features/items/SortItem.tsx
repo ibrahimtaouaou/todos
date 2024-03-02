@@ -21,7 +21,6 @@ function SortItem({ currItems }: CurrentItemsType) {
   }
 
   function handleDirectionClick() {
-    console.log(Date.now());
     const direction = sortDirection === "asc" ? "desc" : "asc";
     setSortDirection(direction);
     const newItems = sortItems(value, currItems, direction);
@@ -31,7 +30,7 @@ function SortItem({ currItems }: CurrentItemsType) {
   return (
     <>
       <select
-        className="p-2 m-2"
+        className="p-2 mr-2 my-2 bg-blue-light"
         defaultValue="Name"
         onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
           handleSelect(

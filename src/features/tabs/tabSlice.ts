@@ -13,11 +13,8 @@ type TabsState = {
 type RestrictedPayload = { newName: string; code: string };
 
 const initialState: TabsState = {
-  tabs: [
-    { name: "Demo".toUpperCase(), restricted: false },
-    { name: "Demo2".toUpperCase(), restricted: false },
-  ],
-  currentTab: "Demo".toUpperCase(),
+  tabs: [{ name: "Example".toUpperCase(), restricted: false }],
+  currentTab: "Example".toUpperCase(),
   valueTab: 0,
 };
 
@@ -79,7 +76,16 @@ const tabSlice = createSlice({
       state.tabs = state.tabs.map(
         (tab: TabType): TabType =>
           tab.name === state.currentTab
-            ? { name: action.payload.toUpperCase(), restricted: tab.restricted }
+            ? tab.code
+              ? {
+                  name: action.payload.toUpperCase(),
+                  restricted: tab.restricted,
+                  code: tab.code,
+                }
+              : {
+                  name: action.payload.toUpperCase(),
+                  restricted: tab.restricted,
+                }
             : tab
       );
       state.currentTab = action.payload.toUpperCase();
