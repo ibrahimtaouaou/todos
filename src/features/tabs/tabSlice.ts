@@ -64,9 +64,9 @@ const tabSlice = createSlice({
       state.valueTab = state.tabs.length - 1;
       saveState("tabs", state.tabs);
     },
-    removeTab(state: TabsState): void {
+    removeTab(state: TabsState, action: PayloadAction<string>): void {
       state.tabs = state.tabs.filter(
-        (tab: TabType): boolean => tab.name !== state.currentTab
+        (tab: TabType): boolean => tab.name !== action.payload
       );
       state.currentTab = state.tabs[0].name;
       state.valueTab = 0;
