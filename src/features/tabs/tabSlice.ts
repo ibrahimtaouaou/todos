@@ -32,7 +32,7 @@ const localStateInit = (): TabsState => {
     return initialState;
   }
   const tabs = JSON.parse(localTabs);
-  const currentTab = tabs[0];
+  const currentTab = tabs[0].name;
   const valueTab = 0;
 
   return { tabs, currentTab, valueTab };
