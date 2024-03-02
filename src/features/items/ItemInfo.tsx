@@ -48,7 +48,7 @@ function ItemInfo({ item }: PropType) {
           checked={item.checked}
           onChange={() => handleCheckBoxChange(item.id)}
         />
-        <span className={`col-span-2 text-wrap`}>{item.title}</span>
+        <span className={`col-span-2 text-wrap break-words`}>{item.title}</span>
         <span className={`flex justify-end min-w-6 pl-4 pr-2 `}>
           x{item.quantity}
         </span>
