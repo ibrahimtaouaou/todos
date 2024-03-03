@@ -99,7 +99,7 @@ const tabSlice = createSlice({
             state.currentTab = state.tabs[action.payload].name;
             state.valueTab = action.payload;
           } else alert("Wrong password");
-        } else alert("Please type a valid password");
+        } else if (code !== null) alert("Please type a valid password");
       } else {
         state.currentTab = state.tabs[action.payload].name;
         state.valueTab = action.payload;

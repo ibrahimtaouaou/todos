@@ -62,7 +62,7 @@ function TabManagment() {
       if (!isInTabs(newName.toUpperCase())) {
         dispatch(addNewTab(newName));
       } else alert("Tab names must be different");
-    } else alert("Please enter a valid tab name");
+    } else if (newName !== null) alert("Please enter a valid tab name");
   }
 
   function handleAddRestrictedTab(): void {
@@ -75,7 +75,7 @@ function TabManagment() {
         if (code) dispatch(addNewRestrictedTab({ newName, code }));
         else alert("Enter a valid password");
       } else alert("Tab names must be different");
-    } else alert("Please enter a valid tab name");
+    } else if (newName !== null) alert("Please enter a valid tab name");
   }
 
   function handleChangeTabName(): void {
@@ -87,7 +87,7 @@ function TabManagment() {
           updateTabItem({ currentTab: currentTab, newTabName: newName })
         );
       } else alert("Tab names must be different");
-    } else alert("Please enter a valid tab name");
+    } else if (newName !== null) alert("Please enter a valid tab name");
   }
 
   function handleDeleteAllItems(): void {
@@ -125,7 +125,7 @@ function TabManagment() {
           dispatch(removeAllItem(tabName));
         } else alert("There must be at least one active normal tab");
       } else alert("This tab does not exist, try again !");
-    } else alert("Please enter a valid tab name");
+    } else if (input !== null) alert("Please enter a valid tab name");
   }
 
   return (
