@@ -7,6 +7,7 @@ import {
   removeTab,
   updateTabName,
   addNewRestrictedTab,
+  TabType,
 } from "./tabSlice";
 import {
   ItemType,
@@ -25,14 +26,32 @@ function TabManagment() {
   const currentTab = useAppSelector<string>(getCurrentTab);
   const items = useAppSelector<ItemType[]>(getItems);
 
-  const isLastTab: boolean = tabs.length === 1;
-  const isTabEmpty: boolean =
-    items.filter((item) => item.tab === currentTab).length === 0;
+  function lastNormalTab(): boolean {
+    const normalTabs: TabType[] = tabs.filter(
+      (tab) => tab.restricted === false
+    );
+    return normalTabs.length === 1;
+  }
+
+  function hasRestrictedTab(): boolean {
+    const normalTabs: TabType[] = tabs.filter((tab) => tab.restricted === true);
+    return normalTabs.length === 1;
+  }
+
+  function isRestrictedTab(name: string): boolean {
+    const tabName: TabType = tabs.find((tab) => tab.name === name) as TabType;
+    return tabName.restricted;
+  }
+
+  // const isLastDeletableTab: boolean = tabs.length === 1 ;
+  function isTabEmpty(): boolean {
+    return items.filter((item) => item.tab === currentTab).length === 0;
+  }
 
   function isInTabs(value: string): boolean {
     let present = false;
     tabs.forEach((tab) => {
-      if (tab.name === value.toUpperCase()) present = true;
+      if (tab.name === value) present = true;
     });
     return present;
   }
@@ -72,7 +91,7 @@ function TabManagment() {
   }
 
   function handleDeleteAllItems(): void {
-    if (!isTabEmpty) {
+    if (!isTabEmpty()) {
       if (
         !window.confirm(
           `Do you really wish to delete all items in "${currentTab}"?`
@@ -84,7 +103,7 @@ function TabManagment() {
   }
 
   function handleDeleteTab(): void {
-    if (!isLastTab) {
+    if (!lastNormalTab() || isRestrictedTab(currentTab)) {
       if (
         !window.confirm(
           `Do you really wish to delete this "${currentTab}" tab and all of its content?`
@@ -93,16 +112,18 @@ function TabManagment() {
         return;
       dispatch(removeTab(currentTab));
       dispatch(removeAllItem(currentTab));
-    } else alert("There is no item in the tab");
+    } else alert("There must be at least one active normal tab");
   }
 
   function handleSpecialDelete(): void {
-    const tabName = prompt("What is the name of the tab you want to delete?");
-    if (tabName) {
+    const input = prompt("What is the name of the tab you want to delete?");
+    if (input) {
+      const tabName = input.toUpperCase();
       if (isInTabs(tabName)) {
-        console.log("here");
-        dispatch(removeTab(tabName.toUpperCase()));
-        dispatch(removeAllItem(tabName.toUpperCase()));
+        if (!lastNormalTab() || isRestrictedTab(tabName)) {
+          dispatch(removeTab(tabName));
+          dispatch(removeAllItem(tabName));
+        } else alert("There must be at least one active normal tab");
       } else alert("This tab does not exist, try again !");
     } else alert("Please enter a valid tab name");
   }
@@ -119,30 +140,32 @@ function TabManagment() {
         <button onClick={handleChangeTabName} className={styles}>
           <span>Rename Current Tab</span>
         </button>
-        {!isTabEmpty && (
+        {!isTabEmpty() && (
           <button onClick={handleDeleteAllItems} className={styles}>
             <span>Delete All Items In Tab</span>
           </button>
         )}
-        {!isLastTab && (
+        {(!lastNormalTab() || isRestrictedTab(currentTab)) && (
           <button onClick={handleDeleteTab} className={styles}>
             <span>Delete Current Tab</span>
           </button>
         )}
       </div>
-      <div className="flex justify-center items-center">
-        <button
-          onClick={handleSpecialDelete}
-          className="border border-red-800 flex flex-row items-center rounded-full w-auto px-2 m-2 text-white  font-semibold"
-        >
-          <DeleteForeverIcon color="error" />
-        </button>
-        <p className="text-xs px-2">
-          If you cannot access a restricted tab anymore, you can delete it by
-          clicking this red button and giving its name. ‼️ THIS WILL DELETE THE
-          GIVEN TAB AND ALL ITS CONTENT FOREVER ‼️
-        </p>
-      </div>
+      {hasRestrictedTab() && (
+        <div className="flex justify-center items-center">
+          <button
+            onClick={handleSpecialDelete}
+            className="border border-red-800 flex flex-row items-center rounded-full w-auto px-2 m-2 text-white  font-semibold"
+          >
+            <DeleteForeverIcon color="error" />
+          </button>
+          <p className="text-xs px-2">
+            If you cannot access a restricted tab anymore, you can delete it by
+            clicking this red button and giving its name. ‼️ THIS WILL DELETE
+            THE GIVEN TAB AND ALL ITS CONTENT FOREVER ‼️
+          </p>
+        </div>
+      )}
     </>
   );
 }
